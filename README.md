@@ -1,7 +1,7 @@
 # MACHINE 2: Binary 32-bit Floating-Point Machine - ALONTO, CHOA, CHUA, LABORADA
 
 ## FILE STRUCTURE
-#### ieee754-sim/
+#### csarch2_case_study_1/
 #### ├── index.html         # landing page, links to the 3 tools
 #### ├── convert.html + convert.js
 #### ├── rounding.html + rounding.js
