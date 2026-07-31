@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IEEE 754 Binary32 Simulator</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>IEEE 754 Binary Single-Precision Simulator</h1>
+    <p class="subtitle">Decimal &#8644; binary32 conversion, rounding methods, and rounded arithmetic &mdash; Machine 2</p>
+  </header>
+
+  <nav class="tabs">
+    <a class="tab-btn active" href="index.html">Home</a>
+    <a class="tab-btn" href="convert.html">1. Decimal &rarr; Binary32</a>
+    <a class="tab-btn" href="rounding.html">2. Rounding Methods</a>
+    <a class="tab-btn" href="arithmetic.html">3. Rounded Arithmetic</a>
+  </nav>
+
+  <main>
+    <h2>About this simulator</h2>
+    <p>
+      This tool implements IEEE 754 binary single-precision (32-bit) floating point
+      operations entirely client-side, in vanilla JavaScript. Pick a tool below.
+    </p>
+    <div class="home-grid">
+      <a class="home-card" href="convert.html">
+        <h3>Decimal &rarr; Binary32</h3>
+        <p>Convert a decimal number to its IEEE 754 binary/hex representation (and back), including special cases like NaN, Infinity, and subnormals.</p>
+      </a>
+      <a class="home-card" href="rounding.html">
+        <h3>Rounding Methods</h3>
+        <p>See chopping, round-up, round-down, and round-to-nearest ties-to-even applied to the same value side by side.</p>
+      </a>
+      <a class="home-card" href="arithmetic.html">
+        <h3>Rounded Arithmetic</h3>
+        <p>Add or multiply two operands (decimal or hex) with a selectable rounding method and full step-by-step working.</p>
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    <p>Machine 2 &mdash; Binary 32-bit Floating-Point Machine &bull; IEEE 754 binary32 &bull; Client-side only, no backend required.</p>
+  </footer>
+</body>
+</html>
