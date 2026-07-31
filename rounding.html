@@ -68,31 +68,6 @@
          Throws an Error with a readable .message on invalid input —
          wrap the call in try/catch and show e.message to the user.
        ============================================================ -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const roundBtn = document.getElementById('round-btn');
-
-      roundBtn.addEventListener('click', () => {
-        const kind = document.getElementById('round-kind').value;
-        const input = document.getElementById('round-input').value;
-        const bits = parseInt(document.getElementById('round-bits').value, 10);
-
-        // TODO: validate `bits` (e.g. between 1 and 52), throw/show an
-        //       error message if invalid
-
-        // TODO: call window.IEEE754.demonstrateRounding(input, kind, bits)
-
-        // TODO: on success, clear #round-tbody and append one <tr> per
-        //       mode (chop, up, down, nearest_even) with a human-readable
-        //       label and the `${bits} × 2^${exp}` value, then unhide
-        //       #round-result
-
-        // TODO: on error (try/catch), show e.message to the user
-      });
-
-      // Optional: trigger the button once here so the page shows a
-      // worked example on load, once the TODOs above are implemented.
-    });
-  </script>
+  <script src="rounding.js"></script>
 </body>
 </html>
