@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rounded Arithmetic | IEEE 754 Simulator</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>IEEE 754 Binary Single-Precision Simulator</h1>
+    <p class="subtitle">Decimal ⇄ binary32 conversion, rounding methods, and rounded arithmetic — Machine 2</p>
+  </header>
+
+  <nav class="tabs">
+    <a class="tab-btn" href="index.html">Home</a>
+    <a class="tab-btn" href="convert.html">1. Decimal → Binary32</a>
+    <a class="tab-btn" href="rounding.html">2. Rounding Methods</a>
+    <a class="tab-btn active" href="arithmetic.html">3. Rounded Arithmetic</a>
+  </nav>
+
+  <main>
+    <h2>Rounded Arithmetic (Addition / Multiplication)</h2>
+    <div class="form-row two-col">
+      <div>
+        <label for="op-a">Operand A</label>
+        <input id="op-a" type="text" value="12.375" />
+        <select id="op-a-kind"><option value="decimal">Decimal</option><option value="hex">IEEE Hex</option></select>
+      </div>
+      <div>
+        <label for="op-b">Operand B</label>
+        <input id="op-b" type="text" value="0.1" />
+        <select id="op-b-kind"><option value="decimal">Decimal</option><option value="hex">IEEE Hex</option></select>
+      </div>
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label for="op-type">Operation</label>
+        <select id="op-type"><option value="add">Addition</option><option value="multiply">Multiplication</option></select>
+      </div>
+      <div>
+        <label for="op-mode">Rounding method</label>
+        <select id="op-mode">
+          <option value="nearest_even">Round to nearest, ties to even</option>
+          <option value="chop">Chopping (truncate)</option>
+          <option value="up">Round toward +Infinity</option>
+          <option value="down">Round toward -Infinity</option>
+        </select>
+      </div>
+    </div>
+    <button id="op-btn">Compute</button>
+    <div id="op-result" class="result-box" hidden>
+      <div class="field-row"><span class="label">Binary</span><code id="op-binary"></code></div>
+      <div class="field-row"><span class="label">Hexadecimal</span><code id="op-hex"></code></div>
+      <div class="field-row"><span class="label">Decimal</span><code id="op-decimal"></code></div>
+      <details class="steps" open><summary>Step-by-step</summary><ol id="op-steps"></ol></details>
+    </div>
+  </main>
+
+  <footer>
+    <p>Machine 2 — Binary 32-bit Floating-Point Machine • IEEE 754 binary32 • Client-side only, no backend required.</p>
+  </footer>
+
+  <!-- Shared math engine — already implemented, exposes window.IEEE754.* -->
+  <script src="ieee754-core.js"></script>
+
+  <!-- ============================================================
+       TODO (partner assignment: Rounded Arithmetic page)
+       Wire up the form above using window.IEEE754:
+         - window.IEEE754.arithmetic(aStr, aKind, bStr, bKind, op, mode)
+             aKind/bKind: 'decimal' or 'hex' (from #op-a-kind / #op-b-kind)
+             op: 'add' or 'multiply' (from #op-type)
+             mode: 'nearest_even' | 'chop' | 'up' | 'down' (from #op-mode)
+             -> { binary, hex, decimal, steps: [ "...", "...", ... ], fields }
+         Throws an Error with a readable .message on invalid input —
+         wrap the call in try/catch and show e.message to the user.
+       ============================================================ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const opBtn = document.getElementById('op-btn');
+
+      opBtn.addEventListener('click', () => {
+        const aStr = document.getElementById('op-a').value;
+        const aKind = document.getElementById('op-a-kind').value;
+        const bStr = document.getElementById('op-b').value;
+        const bKind = document.getElementById('op-b-kind').value;
+        const op = document.getElementById('op-type').value; // 'add' or 'multiply'
+        const mode = document.getElementById('op-mode').value;
+
+        // TODO: call window.IEEE754.arithmetic(aStr, aKind, bStr, bKind, op, mode)
+
+        // TODO: on success, fill in #op-binary, #op-hex, #op-decimal, and
+        //       append each string in result.steps as an <li> inside
+        //       #op-steps, then unhide #op-result
+
+        // TODO: on error (try/catch), show e.message to the user
+      });
+
+      // Optional: trigger the button once here so the page shows a
+      // worked example on load, once the TODOs above are implemented.
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rounding Methods | IEEE 754 Simulator</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>IEEE 754 Binary Single-Precision Simulator</h1>
+    <p class="subtitle">Decimal ⇄ binary32 conversion, rounding methods, and rounded arithmetic — Machine 2</p>
+  </header>
+
+  <nav class="tabs">
+    <a class="tab-btn" href="index.html">Home</a>
+    <a class="tab-btn" href="convert.html">1. Decimal → Binary32</a>
+    <a class="tab-btn active" href="rounding.html">2. Rounding Methods</a>
+    <a class="tab-btn" href="arithmetic.html">3. Rounded Arithmetic</a>
+  </nav>
+
+  <main>
+    <h2>Demonstrate Rounding Methods</h2>
+    <div class="form-row">
+      <label for="round-kind">Input format</label>
+      <select id="round-kind">
+        <option value="decimal">Decimal</option>
+        <option value="binary">Binary fraction (e.g. 1.01101)</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="round-input">Value</label>
+      <input id="round-input" type="text" placeholder="e.g. 3.14159" value="3.14159" />
+    </div>
+    <div class="form-row">
+      <label for="round-bits">Target number of mantissa bits to round to</label>
+      <input id="round-bits" type="number" min="1" max="52" value="8" />
+      <button id="round-btn">Round</button>
+    </div>
+    <div id="round-result" class="result-box" hidden>
+      <table class="round-table">
+        <thead><tr><th>Method</th><th>Result (1.xxxx × 2^e form)</th></tr></thead>
+        <tbody id="round-tbody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    <p>Machine 2 — Binary 32-bit Floating-Point Machine • IEEE 754 binary32 • Client-side only, no backend required.</p>
+  </footer>
+
+  <!-- Shared math engine — already implemented, exposes window.IEEE754.* -->
+  <script src="ieee754-core.js"></script>
+
+  <!-- ============================================================
+       TODO (partner assignment: Rounding Methods page)
+       Wire up the form above using window.IEEE754:
+         - window.IEEE754.demonstrateRounding(inputString, kind, targetBits)
+             kind is 'decimal' or 'binary' (from #round-kind)
+             targetBits is an integer (from #round-bits)
+             -> returns an object keyed by mode:
+                {
+                  chop:         { bits: "1.xxxxxxxx", exp: <int> },
+                  up:           { bits: "1.xxxxxxxx", exp: <int> },
+                  down:         { bits: "1.xxxxxxxx", exp: <int> },
+                  nearest_even: { bits: "1.xxxxxxxx", exp: <int> }
+                }
+         Throws an Error with a readable .message on invalid input —
+         wrap the call in try/catch and show e.message to the user.
+       ============================================================ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const roundBtn = document.getElementById('round-btn');
+
+      roundBtn.addEventListener('click', () => {
+        const kind = document.getElementById('round-kind').value;
+        const input = document.getElementById('round-input').value;
+        const bits = parseInt(document.getElementById('round-bits').value, 10);
+
+        // TODO: validate `bits` (e.g. between 1 and 52), throw/show an
+        //       error message if invalid
+
+        // TODO: call window.IEEE754.demonstrateRounding(input, kind, bits)
+
+        // TODO: on success, clear #round-tbody and append one <tr> per
+        //       mode (chop, up, down, nearest_even) with a human-readable
+        //       label and the `${bits} × 2^${exp}` value, then unhide
+        //       #round-result
+
+        // TODO: on error (try/catch), show e.message to the user
+      });
+
+      // Optional: trigger the button once here so the page shows a
+      // worked example on load, once the TODOs above are implemented.
+    });
+  </script>
+</body>
+</html>

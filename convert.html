@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Decimal → Binary32 | IEEE 754 Simulator</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>IEEE 754 Binary Single-Precision Simulator</h1>
+    <p class="subtitle">Decimal ⇄ binary32 conversion, rounding methods, and rounded arithmetic — Machine 2</p>
+  </header>
+
+  <nav class="tabs">
+    <a class="tab-btn" href="index.html">Home</a>
+    <a class="tab-btn active" href="convert.html">1. Decimal → Binary32</a>
+    <a class="tab-btn" href="rounding.html">2. Rounding Methods</a>
+    <a class="tab-btn" href="arithmetic.html">3. Rounded Arithmetic</a>
+  </nav>
+
+  <main>
+    <h2>Convert Decimal → IEEE 754 Single-Precision</h2>
+    <div class="form-row">
+      <label for="dec-input">Decimal number (accepts NaN, Infinity, -Infinity)</label>
+      <input id="dec-input" type="text" placeholder="e.g. -118.625, 0.1, 3.4e38, NaN" value="-118.625" />
+      <button id="dec-convert-btn">Convert</button>
+    </div>
+    <div id="dec-result" class="result-box" hidden>
+      <div class="field-row"><span class="label">Binary (spaced)</span><code id="dec-binary"></code></div>
+      <div class="field-row"><span class="label">Hexadecimal</span><code id="dec-hex"></code></div>
+      <div class="field-row"><span class="label">Sign / Exponent / Mantissa</span><code id="dec-fields"></code></div>
+      <div class="field-row"><span class="label">Special case?</span><code id="dec-special"></code></div>
+      <div class="field-row"><span class="label">Round-trip decimal value</span><code id="dec-echo"></code></div>
+      <details class="steps"><summary>Step-by-step</summary><ol id="dec-steps"></ol></details>
+    </div>
+
+    <h2>Convert IEEE 754 Hex → Decimal</h2>
+    <div class="form-row">
+      <label for="hex-input">Hexadecimal (32-bit)</label>
+      <input id="hex-input" type="text" placeholder="e.g. 0xC2ED4000" value="0xC2ED4000" />
+      <button id="hex-convert-btn">Convert</button>
+    </div>
+    <div id="hex-result" class="result-box" hidden>
+      <div class="field-row"><span class="label">Binary (spaced)</span><code id="hex-binary"></code></div>
+      <div class="field-row"><span class="label">Decimal value</span><code id="hex-decimal"></code></div>
+      <div class="field-row"><span class="label">Special case?</span><code id="hex-special"></code></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Machine 2 — Binary 32-bit Floating-Point Machine • IEEE 754 binary32 • Client-side only, no backend required.</p>
+  </footer>
+
+  <!-- Shared math engine — already implemented, exposes window.IEEE754.* -->
+  <script src="ieee754-core.js"></script>
+
+  <!-- ============================================================
+       TODO (partner assignment: Decimal <-> Binary32 page)
+       Wire up the two forms above using window.IEEE754:
+         - window.IEEE754.convertDecimal(decimalString)
+             -> { binary, hex, fields: { sign, exponentBits, mantissaBits,
+                  special, steps }, decimalEcho }
+         - window.IEEE754.convertHexToDecimal(hexString)
+             -> { binary, hex, fields: { ...same shape... }, decimal }
+       Both throw an Error with a readable .message on invalid input —
+       wrap calls in try/catch and show e.message to the user.
+       ============================================================ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const decBtn = document.getElementById('dec-convert-btn');
+      const hexBtn = document.getElementById('hex-convert-btn');
+
+      decBtn.addEventListener('click', () => {
+        const input = document.getElementById('dec-input').value;
+        // TODO: call window.IEEE754.convertDecimal(input)
+        // TODO: on success, fill in #dec-binary, #dec-hex, #dec-fields,
+        //       #dec-special, #dec-echo, and the #dec-steps <ol>, then
+        //       unhide #dec-result (result.hidden = false)
+        // TODO: on error (try/catch), show e.message to the user
+      });
+
+      hexBtn.addEventListener('click', () => {
+        const input = document.getElementById('hex-input').value;
+        // TODO: call window.IEEE754.convertHexToDecimal(input)
+        // TODO: on success, fill in #hex-binary, #hex-decimal, #hex-special,
+        //       then unhide #hex-result
+        // TODO: on error (try/catch), show e.message to the user
+      });
+
+      // Optional: trigger both buttons once here so the page shows a
+      // worked example on load, once the TODOs above are implemented.
+    });
+  </script>
+</body>
+</html>
