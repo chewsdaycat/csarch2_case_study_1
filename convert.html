@@ -66,31 +66,6 @@
        Both throw an Error with a readable .message on invalid input —
        wrap calls in try/catch and show e.message to the user.
        ============================================================ -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const decBtn = document.getElementById('dec-convert-btn');
-      const hexBtn = document.getElementById('hex-convert-btn');
-
-      decBtn.addEventListener('click', () => {
-        const input = document.getElementById('dec-input').value;
-        // TODO: call window.IEEE754.convertDecimal(input)
-        // TODO: on success, fill in #dec-binary, #dec-hex, #dec-fields,
-        //       #dec-special, #dec-echo, and the #dec-steps <ol>, then
-        //       unhide #dec-result (result.hidden = false)
-        // TODO: on error (try/catch), show e.message to the user
-      });
-
-      hexBtn.addEventListener('click', () => {
-        const input = document.getElementById('hex-input').value;
-        // TODO: call window.IEEE754.convertHexToDecimal(input)
-        // TODO: on success, fill in #hex-binary, #hex-decimal, #hex-special,
-        //       then unhide #hex-result
-        // TODO: on error (try/catch), show e.message to the user
-      });
-
-      // Optional: trigger both buttons once here so the page shows a
-      // worked example on load, once the TODOs above are implemented.
-    });
-  </script>
+    <script src = "convert.js"></script>
 </body>
 </html>
