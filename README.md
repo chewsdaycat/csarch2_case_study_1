@@ -1,6 +1,8 @@
 # MACHINE 2: Binary 32-bit Floating-Point Machine
 **ALONTO, CHOA, CHUA, LABORADA**
 
+## Video Link:
+
 ## File Structure
 
 ```
