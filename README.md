@@ -6,9 +6,12 @@
 ```
 csarch2_case_study_1/
 ├── index.html          # landing page, links to the 3 tools
-├── convert.html + convert.js
-├── rounding.html + rounding.js
-├── arithmetic.html + arithmetic.js
+├── convert.html
+├── convert.js
+├── rounding.html
+├── rounding.js
+├── arithmetic.html
+├── arithmetic.js
 ├── style.css            # shared styling + nav bar
 ├── ieee754-core.js       # shared math engine (unchanged)
 ├── vercel.json
