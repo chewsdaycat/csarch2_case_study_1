@@ -3,6 +3,8 @@
 
 ## Video Link: https://youtu.be/HNhtuTmR3SY
 
+A browser-based IEEE 754 binary32 toolkit that lets users convert decimal/hex values into their floating-point representation, compare the four IEEE rounding modes side by side, and perform binary32 addition and multiplication — with each step of the underlying bit-level math shown explicitly.
+
 ## File Structure
 
 ```
@@ -19,6 +21,18 @@ csarch2_case_study_1/
 ├── vercel.json
 └── README.md
 ```
+
+---
+
+## BigInt Conversion (Decimal/Hex → BigInt)
+
+Before any IEEE 754 encoding/decoding happens, both decimal and hexadecimal inputs are first converted into JavaScript `BigInt` values. This is done because standard JS numbers are IEEE 754 doubles themselves and lose precision on raw 32-bit bit manipulation (shifts, masks) once you approach the edges of the safe integer range — using `BigInt` guarantees exact, lossless integer arithmetic while assembling/disassembling the sign, exponent, and mantissa fields.
+
+- **Decimal → BigInt:** the decimal string is parsed and split into integer and fractional parts. The integer part is converted directly via `BigInt(Math.trunc(value))`. Once the value's binary32 fields (sign, exponent, mantissa) are computed, the individual field values are combined into a single 32-bit pattern using `BigInt` bitwise operators (`<<`, `|`), which avoids the 32-bit signed overflow behavior of native JS bitwise operators (which internally coerce to `Int32`).
+- **Hex → BigInt:** the hex string (e.g. `"0x3F800000"`) is passed directly to `BigInt("0x3F800000")`, giving an exact 32-bit unsigned integer. This value is then masked and shifted with `BigInt` operations to extract the sign (1 bit), exponent (8 bits), and mantissa (23 bits) fields without any precision loss.
+- **BigInt → binary/hex string (for display):** the resulting `BigInt` is converted back with `.toString(2)` (binary) or `.toString(16)` (hex), then zero-padded to the expected field width (32 bits for the full pattern, 8 for exponent, 23 for mantissa) since `.toString()` on `BigInt` drops leading zeros.
+
+Using `BigInt` throughout keeps the bit-level assembly/disassembly of the 32-bit pattern exact and independent of JavaScript's native `Number` precision limits, which matters since the whole point of the tool is to demonstrate precision behavior — the tool itself shouldn't introduce precision bugs of its own.
 
 ---
 
@@ -123,6 +137,21 @@ Each mode is applied to the same input mantissa/exponent pair so the four result
 | 8 | `Infinity` | `-Infinity` | add | `NaN` | Invalid operation (∞ + (−∞)) |
 | 9 | `3.4028235e38` | `2` | multiply | `Infinity` | Overflow case |
 | 10 | `1.0000001` | `1.0000002` | multiply | rounds per nearest-even | Tests rounding after multiply |
+
+---
+
+## Libraries Used
+
+This project intentionally uses **no external JavaScript libraries or frameworks** — it is built entirely with vanilla HTML, CSS, and JavaScript, plus a custom-written math engine (`ieee754-core.js`).
+
+| Component | Choice | Justification |
+|---|---|---|
+| Core logic | Vanilla JS (`ieee754-core.js`, custom-built) | IEEE 754 conversion, rounding, and arithmetic are the actual subject being demonstrated. Using a third-party bignum or floating-point library (e.g., `decimal.js`) would hide the bit-level operations the case study requires us to show, so sign/exponent/mantissa manipulation is implemented manually with native JS bitwise operators and typed arrays (`DataView`/`ArrayBuffer`) where needed. |
+| DOM/UI | Vanilla JS (no React/Vue/jQuery) | The UI only needs simple event listeners and text updates per module; a framework would add build tooling and overhead disproportionate to the app's scope. |
+| Styling | Plain CSS (`style.css`) | A single shared stylesheet was sufficient for consistent nav/layout across the three tool pages; no CSS framework (e.g., Bootstrap/Tailwind) was needed for a UI this small. |
+| Hosting/deployment | Vercel (`vercel.json`) | Used only for static site deployment/config, not as a runtime dependency — it has no effect on the IEEE 754 logic itself. |
+
+No `package.json` or `node_modules` are required to run the project, since it has zero runtime dependencies; the three HTML pages can be opened directly or served as static files.
 
 ---
 
