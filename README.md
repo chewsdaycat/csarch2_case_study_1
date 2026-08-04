@@ -3,7 +3,7 @@
 
 ## Video Link: https://youtu.be/HNhtuTmR3SY
 
-A browser-based IEEE 754 binary32 toolkit that lets users convert decimal/hex values into their floating-point representation, compare the four IEEE rounding modes side by side, and perform binary32 addition and multiplication — with each step of the underlying bit-level math shown explicitly.
+A browser-based IEEE 754 binary32 toolkit that lets users convert decimal/hex values into their floating-point representation, compare the four IEEE rounding modes side by side, and perform binary32 addition and multiplication, with each step of the underlying bit-level math shown explicitly.
 
 ## File Structure
 
