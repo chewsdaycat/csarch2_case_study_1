@@ -3,7 +3,7 @@
 
 ## Video Link: https://youtu.be/HNhtuTmR3SY
 
-A browser-based IEEE 754 binary32 toolkit that lets users convert decimal/hex values into their floating-point representation, compare the four IEEE rounding modes side by side, and perform binary32 addition and multiplication, with each step of the underlying bit-level math shown explicitly.
+A browser-based IEEE 754 binary32 toolkit that lets users convert decimal/hex values into their floating-point representation, compare the four IEEE rounding modes side by side, and perform binary32 addition and multiplication — with each step of the underlying bit-level math shown explicitly.
 
 ## File Structure
 
@@ -133,8 +133,8 @@ Each mode is applied to the same input mantissa/exponent pair so the four result
 | 4 | `5` | `-5` | add | `0` (positive zero) | Cancellation case |
 | 5 | `-3.5` | `2` | add | `-1.5` | Mixed-sign addition (behaves as subtraction) |
 | 6 | `0` | `5` | multiply | `0` | Zero-operand case |
-| 7 | `Infinity` | `2` | multiply | `Infinity` | Special-case propagation |
-| 8 | `Infinity` | `-Infinity` | add | `NaN` | Invalid operation (∞ + (−∞)) |
+| 7 | `0x7F800000` (+Inf) | `2` | multiply | `0x7F800000` (+Inf) | Special-case propagation |
+| 8 | `0x7F800000` (+Inf) | `0xFF800000` (-Inf) | add | `0x7FC00000` (NaN) | Invalid operation (∞ + (−∞)) |
 | 9 | `3.4028235e38` | `2` | multiply | `Infinity` | Overflow case |
 | 10 | `1.0000001` | `1.0000002` | multiply | rounds per nearest-even | Tests rounding after multiply |
 
