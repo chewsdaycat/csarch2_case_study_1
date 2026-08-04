@@ -15,6 +15,8 @@
  *  - Rounding modes implemented: chop (truncate / round toward zero),
  *    round up (toward +Infinity), round down (toward -Infinity),
  *    and round to nearest, ties to even (the IEEE 754 default).
+ *
+ * Refs: see comments above each function.
  */
 
 const BIAS = 127;
@@ -105,6 +107,7 @@ function normalizeFraction(num, den, bitCount) {
 // where carry=true means the mantissa overflowed (all 1s -> rounds up to
 // 1.000..0 x 2^(e+1)).
 // ---------------------------------------------------------------------
+// Laborada - rounding, ref: mathcenter.oxford.emory.edu/site/cs170/ieee754
 function roundMantissa(bits, remainderNonZero, mode, sign) {
   const kept = bits.slice(0, MANTISSA_BITS);
   const guard = bits[MANTISSA_BITS] || 0;
@@ -148,6 +151,7 @@ function roundMantissa(bits, remainderNonZero, mode, sign) {
 // Full decimal -> binary32 field encoder (with selectable rounding mode,
 // default = nearest_even, the IEEE 754 default for conversions).
 // ---------------------------------------------------------------------
+// Chua - conversion, ref: mathcenter.oxford.emory.edu/site/cs170/ieee754
 function decimalToFields(decimalStr, mode = 'nearest_even') {
   const trimmed = decimalStr.trim().toLowerCase();
 
@@ -212,6 +216,7 @@ function decimalToFields(decimalStr, mode = 'nearest_even') {
   return { sign: sign === -1 ? 1 : 0, exponentBits, mantissaBits: finalMantissa, special: null, unbiasedExp: finalExp, steps };
 }
 
+// Chua - conversion, ref: mathcenter.oxford.emory.edu/site/cs170/ieee754
 function specialFields(kind, steps = []) {
   if (kind === 'nan') {
     return { sign: 0, exponentBits: 255, mantissaBits: [1, ...new Array(22).fill(0)], special: 'NaN', unbiasedExp: null, steps: [...steps, 'Encoded as NaN: exponent all 1s, nonzero mantissa.'] };
@@ -323,6 +328,7 @@ function bigFractionToDecimal(num, den) {
 // ---------------------------------------------------------------------
 // Public: decimal -> full representation
 // ---------------------------------------------------------------------
+// Chua - conversion, ref: mathcenter.oxford.emory.edu/site/cs170/ieee754
 function convertDecimal(decimalStr) {
   const fields = decimalToFields(decimalStr, 'nearest_even');
   const bits = fieldsToBits32(fields);
@@ -334,6 +340,7 @@ function convertDecimal(decimalStr) {
   };
 }
 
+// Chua - conversion, ref: mathcenter.oxford.emory.edu/site/cs170/ieee754
 function convertHexToDecimal(hexStr) {
   const bits = hexToBits32(hexStr);
   const fields = bitsToFields(bits);
@@ -349,6 +356,7 @@ function convertHexToDecimal(hexStr) {
 // Rounding demonstration (part 2): take a decimal or binary-fraction
 // input plus a target bit/digit count, and show all four methods.
 // ---------------------------------------------------------------------
+// Laborada - rounding, ref: mathcenter.oxford.emory.edu/site/cs170/ieee754
 function demonstrateRounding(inputStr, inputKind, targetBits) {
   let sign = 1, num, den;
   if (inputKind === 'decimal') {
@@ -416,6 +424,7 @@ function parseOperand(str, kind) {
 // Get the *exact* value of an operand as a signed BigInt fraction (num/den),
 // re-deriving it from its own decimal parse (exact) so that arithmetic
 // isn't pre-rounded twice. For hex input, the field bits ARE the exact value.
+// Alonto & Choa - arithmetic, ref: geeksforgeeks.org/ieee-754-floating-point
 function operandToExactFraction(str, kind) {
   if (kind === 'hex') {
     const bits = hexToBits32(str);
@@ -442,6 +451,7 @@ function operandToExactFraction(str, kind) {
   }
 }
 
+// Alonto & Choa - arithmetic, ref: geeksforgeeks.org/ieee-754-floating-point
 function fractionToRoundedFields(num, den, mode) {
   // num may be negative, den > 0
   const sign = num < 0n ? -1 : 1;
@@ -466,6 +476,7 @@ function fractionToRoundedFields(num, den, mode) {
   return { sign: sign === -1 ? 1 : 0, exponentBits: finalExp + BIAS, mantissaBits: finalMantissa, special: null, unbiasedExp: finalExp };
 }
 
+// Alonto & Choa - arithmetic, ref: geeksforgeeks.org/ieee-754-floating-point
 function arithmetic(aStr, aKind, bStr, bKind, op, mode) {
   const steps = [];
   const A = operandToExactFraction(aStr, aKind);
