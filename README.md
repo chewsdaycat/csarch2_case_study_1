@@ -129,3 +129,5 @@ Each mode is applied to the same input mantissa/exponent pair so the four result
 References
 
 IEEE. (2019). *IEEE standard for floating-point arithmetic* (IEEE Std 754-2019). Institute of Electrical and Electronics Engineers. https://doi.org/10.1109/IEEESTD.2019.8766229
+
+Oser, P. (n.d.). The IEEE 754 format. Oxford College Math Center, Emory University. Retrieved August 1, 2026, from https://mathcenter.oxford.emory.edu/site/cs170/ieee754/
